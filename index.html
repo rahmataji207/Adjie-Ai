@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>Adjie AI — Image & Video Generator</title>
+<style>
+:root{--bg:#090b12;--panel:#111522;--panel2:#171d2d;--line:#252d40;--muted:#9aa5ba;--text:#f4f6fb;--purple:#8b5cf6;--cyan:#22d3ee}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#211644 0,transparent 35%),radial-gradient(ellipse at 90% 15%,#10313b 0,transparent 28%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+header{height:72px;border-bottom:1px solid #ffffff12;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,64px);backdrop-filter:blur(16px);position:sticky;top:0;background:#090b12d9;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;letter-spacing:-.4px}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:grid;place-items:center;color:white;font-weight:900;box-shadow:0 5px 24px #8b5cf655}
+.pill{font-size:12px;color:#b8f6df;background:#10382f;border:1px solid #1d644e;padding:6px 10px;border-radius:30px}
+main{max-width:1160px;margin:auto;padding:55px 22px 80px}.hero{text-align:center;margin-bottom:34px}.eyebrow{color:#b7a2ff;text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}.hero h1{font-size:clamp(32px,6vw,58px);line-height:1.05;letter-spacing:-2px;margin:13px 0}.gradient{background:linear-gradient(90deg,#c4a5ff,#6ee7f9);color:transparent;background-clip:text}.hero p{color:var(--muted);max-width:610px;margin:0 auto}
+.workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:20px;align-items:start}.panel{background:linear-gradient(180deg,#151a29f2,#101522f2);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 20px 70px #0003}.panel h2{font-size:17px;margin:0 0 18px}.tabs{display:flex;gap:8px;background:#0b0f19;padding:5px;border-radius:12px;margin-bottom:20px}.tab{border:0;background:transparent;color:var(--muted);padding:10px 15px;border-radius:9px;flex:1;font-weight:700}.tab.active{background:#282044;color:#e8dcff;box-shadow:inset 0 0 0 1px #7654bc55}
+label{display:block;color:#dce2ef;font-size:13px;font-weight:650;margin:15px 0 8px}textarea,input,select{width:100%;background:#0b101b;border:1px solid #2b354a;border-radius:11px;color:var(--text);padding:12px 13px;outline:none}textarea{min-height:118px;resize:vertical}textarea:focus,input:focus,select:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px #8b5cf622}.hint{font-size:11px;color:var(--muted);margin-top:7px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.primary{width:100%;border:0;border-radius:12px;padding:14px 18px;margin-top:20px;color:white;font-weight:800;background:linear-gradient(100deg,#7c3aed,#4f46e5 55%,#0891b2);box-shadow:0 8px 24px #5b3cc044}.primary:disabled{opacity:.55;cursor:wait}.secondary{background:#20283a;color:#e5eaf5;border:1px solid #303b52;border-radius:10px;padding:9px 12px}.preview{min-height:420px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 45%,#25203b,#0b101a 70%);border:1px dashed #36415a;border-radius:15px;position:relative}.preview img,.preview video{max-width:100%;max-height:560px;display:block;object-fit:contain}.empty{text-align:center;color:var(--muted);padding:35px}.empty .spark{font-size:42px;margin-bottom:10px}.status{font-size:12px;color:var(--muted);margin-top:12px;min-height:18px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions a{color:#d8c7ff;text-decoration:none;border:1px solid #514078;border-radius:9px;padding:8px 12px;font-size:12px}
+.notice{border:1px solid #514323;background:#2b2414;color:#f7dca1;border-radius:12px;padding:12px 14px;font-size:12px;margin-top:18px}.keyrow{display:flex;gap:8px}.keyrow input{flex:1}.small{font-size:11px;color:var(--muted);margin-top:10px}.footer{text-align:center;color:#68748a;font-size:11px;margin-top:35px}
+@media(max-width:800px){.workspace{grid-template-columns:1fr}main{padding-top:35px}.preview{min-height:300px}.hero h1{letter-spacing:-1px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">A</div>Adjie AI</div><div class="pill">✦ AI Studio</div></header>
+<main>
+<section class="hero"><div class="eyebrow">CREATE • IMAGINE • MOTION</div><h1>Turn your ideas into<br><span class="gradient">visual magic.</span></h1><p>Buat gambar dan video AI dari deskripsi teks. Tulis ide, pilih mode, lalu mulai berkarya.</p></section>
+<div class="workspace">
+<section class="panel">
+<h2>Studio Generator</h2>
+<div class="tabs"><button class="tab active" id="imageTab" type="button">▧ Gambar</button><button class="tab" id="videoTab" type="button">▶ Video</button></div>
+<label for="prompt">Deskripsikan ide kamu</label>
+<textarea id="prompt" placeholder="Contoh: Kota futuristik di atas awan saat matahari terbenam, sinematik, detail tinggi..."></textarea>
+<div class="grid2">
+<div><label for="model">Model AI</label><select id="model"></select></div>
+<div><label for="ratio">Rasio</label><select id="ratio"><option value="1:1">Kotak 1:1</option><option value="16:9">Landscape 16:9</option><option value="9:16">Portrait 9:16</option><option value="4:3">Classic 4:3</option></select></div>
+</div>
+<div id="durationWrap" style="display:none"><label for="duration">Durasi video</label><select id="duration"><option value="4">4 detik</option><option value="5">5 detik</option><option value="6">6 detik</option><option value="8">8 detik</option></select></div>
+<label for="apiKey">API Key Pollinations</label>
+<div class="keyrow"><input id="apiKey" type="password" placeholder="Masukkan API key kamu (sk_... / pk_...)"><button class="secondary" id="toggleKey" type="button">Lihat</button></div>
+<div class="hint">Key dipakai langsung dari browser ini. Jangan masukkan secret key ke website publik.</div>
+<button class="primary" id="generate">✦ Generate Gambar</button>
+<div class="notice">Catatan gratis: layanan generator pihak ketiga dapat memiliki batas pemakaian, antrean, watermark, atau biaya kredit. Website ini gratis digunakan, tetapi hasil AI tidak dijamin gratis tanpa batas. Buat API key melalui situs resmi Pollinations.</div>
+<div class="small"><a href="https://enter.pollinations.ai/" target="_blank" rel="noopener" style="color:#bba5ff">Buat / kelola API key ↗</a> · <a href="https://gen.pollinations.ai/" target="_blank" rel="noopener" style="color:#bba5ff">Dokumentasi API ↗</a></div>
+</section>
+<section class="panel">
+<h2>Hasil Kreasi</h2>
+<div class="preview" id="preview"><div class="empty"><div class="spark">✧</div><strong>Hasil akan tampil di sini</strong><div class="hint">Masukkan prompt untuk memulai</div></div></div>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+<div class="actions" id="actions"></div>
+</section>
+</div>
+<div class="footer">ADJIE AI IMAGE GENERATOR · Dibuat untuk kreativitas tanpa batas</div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let mode = "image", objectUrl = null;
+const models = {
+ image: [
+  ["black-forest-labs/flux.1-schnell","Flux Schnell · cepat"],
+  ["tongyi-mai/z-image-turbo","Z-Image Turbo"],
+  ["google/gemini-2.5-flash-image","Gemini Flash Image"]
+ ],
+ video: [
+  ["google/veo-3.1-fast","Veo 3.1 Fast"],
+  ["bytedance/seedance-2.0-mini","Seedance 2.0 Mini"],
+  ["alibaba/wan-2.6","Wan 2.6"]
+ ]
+};
+function fillModels(){ $("model").innerHTML=""; models[mode].forEach(([v,t])=>{let o=document.createElement("option");o.value=v;o.textContent=t;$("model").append(o)}); }
+function setMode(next){
+ mode=next;
+ $("imageTab").classList.toggle("active",mode==="image");$("videoTab").classList.toggle("active",mode==="video");
+ $("durationWrap").style.display=mode==="video"?"block":"none";
+ $("generate").textContent=mode==="image"?"✦ Generate Gambar":"▶ Generate Video";
+ fillModels();
+}
+$("imageTab").onclick=()=>setMode("image");$("videoTab").onclick=()=>setMode("video");
+$("toggleKey").onclick=()=>{$("apiKey").type=$("apiKey").type==="password"?"text":"password";$("toggleKey").textContent=$("apiKey").type==="password"?"Lihat":"Sembunyikan"};
+function setStatus(s){$("status").textContent=s}
+function makeDownload(url,name){$("actions").innerHTML="";let a=document.createElement("a");a.href=url;a.download=name;a.target="_blank";a.rel="noopener";a.textContent="↓ Buka / Unduh hasil";$("actions").append(a)}
+$("generate").onclick=async()=>{
+ const prompt=$("prompt").value.trim(), key=$("apiKey").value.trim();
+ if(!prompt){setStatus("Tulis deskripsi gambar atau video terlebih dahulu.");$("prompt").focus();return}
+ if(!key){setStatus("Masukkan API key Pollinations terlebih dahulu.");$("apiKey").focus();return}
+ const btn=$("generate");btn.disabled=true;$("actions").innerHTML="";setStatus("Menghubungkan ke AI... proses dapat memerlukan waktu.");
+ $("preview").innerHTML='<div class="empty"><div class="spark">✦</div><strong>AI sedang berkarya...</strong><div class="hint">Jangan tutup halaman ini</div></div>';
+ try{
+  const encoded=encodeURIComponent(prompt);
+  const params=new URLSearchParams({model:$("model").value, n:"1"});
+  if(mode==="image") params.set("width", $("ratio").value==="9:16"?"768":$("ratio").value==="16:9"?"1024":"1024"),params.set("height",$("ratio").value==="9:16"?"1365":$("ratio").value==="16:9"?"576":"1024");
+  else {params.set("duration",$("duration").value);params.set("aspectRatio",$("ratio").value)}
+  const endpoint=`https://gen.pollinations.ai/${mode}/${encoded}?${params.toString()}`;
+  const response=await fetch(endpoint,{headers:{Authorization:`Bearer ${key}`}});
+  if(!response.ok){let detail="";try{detail=await response.text()}catch{}throw new Error(`Server ${response.status}: ${detail.slice(0,240)||response.statusText}`)}
+  const blob=await response.blob();
+  if(!blob.size) throw new Error("Server mengembalikan file kosong.");
+  if(objectUrl)URL.revokeObjectURL(objectUrl);
+  objectUrl=URL.createObjectURL(blob);
+  $("preview").innerHTML="";
+  const media=document.createElement(mode==="image"?"img":"video");
+  media.src=objectUrl;if(mode==="video"){media.controls=true;media.playsInline=true}
+  media.alt="Hasil generasi Adjie AI";$("preview").append(media);
+  makeDownload(objectUrl,`adjie-ai-${mode}.${mode==="image"?"png":"mp4"}`);
+  setStatus("Selesai! Hasil berhasil dibuat. Simpan file sebelum menutup halaman.");
+ }catch(err){
+  $("preview").innerHTML='<div class="empty"><div class="spark">⚠</div><strong>Generasi belum berhasil</strong><div class="hint">Periksa API key, saldo/batas akun, model, dan koneksi internet.</div></div>';
+  setStatus(err.message+" — Coba lagi atau pilih model lain.");
+ }finally{btn.disabled=false}
+};
+fillModels();
+</script>
+</body>
+</html>
